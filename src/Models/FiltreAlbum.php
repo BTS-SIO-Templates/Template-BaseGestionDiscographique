@@ -13,14 +13,13 @@ class FiltreAlbum
      * @Assert\Length(
      *      min = 2,
      *      minMessage = "Le nom doit faire au moins {{ limit }} caractères",
+     * )
      */
 
     private ?string $nom = null;
 
     public Artiste $artiste;
     public $styles;
-
-
 
     public function getNom(): ?string
     {

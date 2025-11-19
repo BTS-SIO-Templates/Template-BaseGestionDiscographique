@@ -1,10 +1,4 @@
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=20503175)
-# TP Symfony - Environnement PHP 8.2
 
-Ce projet est un **starter Symfony vierge** configuré pour fonctionner en **PHP 8.42**.  
-Il est distribué via **GitHub Classroom** : chaque étudiant a son dépôt personnel.
-
----
 
 ## 🚀 Étapes pour démarrer
 
@@ -16,10 +10,19 @@ Il est distribué via **GitHub Classroom** : chaque étudiant a son dépôt pers
 ---
 
 ### 2. Configurer la base de données
-⚠️ Vous **n’avez pas de MySQL local** dans Codespaces : la base de données est hébergée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
+la base de données est hébergée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
 
-- Créez un fichier `.env.local` à la racine du projet.  
-- Ajoutez la ligne suivante en adaptant les valeurs (`user`, `password`, `dbname`, `host` fournis par le professeur) :
+- créer un fichier `.env.local` à la racine du projet en y copiant cette ligne :
+`DATABASE_URL="mysql://votrenom:votremdp@btssio.dedyn.io:3306/votrenom_GestionMusiqueLabel?serverVersion=5.7.33&charset=utf8mb4` 
+en remplacant "votrenom" par votre identifiant sur le serveur Mysql du lycée et "votremdp" par votre mot de passe sur ce serveur.
 
-```dotenv
-DATABASE_URL="mysql://user:password@serveur.externe:3306/nom_de_la_base"
+- Créez la base de données sur votre serveur Mysql en tapant en ligne de commande `php bin/console doctrine:database:create` (la base de données créée aura pour nom **votrenom_GestionMusiqueLabel**)
+
+- créer la structures de la base (les tables et leurs relations) en tapant en ligne de commande : `php bin/console doctrine:schema:update --force` (vérifiez le résultat)
+
+- lancez les fixtures afin d'alimenter la base en tapant en ligne de commande : `php bin/console doctrine:fixtures:load`
+
+### 3. compte admin
+l'admin peut se connecter avec son identifiant `admin@gmail.com` et son mot de passe `admin1234` afin d'avoir accès aux fonctionnalité d'administration (CRUD)
+
+

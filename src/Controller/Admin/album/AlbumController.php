@@ -25,6 +25,7 @@ class AlbumController extends AbstractController
         $filtre = new FiltreAlbum();
         $formFiltreAlbum=$this->createForm(FiltreAlbumType::class,$filtre);
         $formFiltreAlbum->handleRequest($request);
+        dump($filtre);
         $albums=$paginator->paginate(
             $repo->listeAlbumsCompletePaginee($filtre),
             $request->query->getInt('page', 1), /* page number */
@@ -56,19 +57,6 @@ class AlbumController extends AbstractController
         $form->handleRequest($request);
         if($form->IsSubmitted() && $form->IsValid())
         {
-            $ficherImg=$form->get('imageFile')->getData();
-            if($ficherImg != null)
-            {
-                if($album->getImage() != "imgAlbumsVierge.jpg" ){
-                    unlink($this->getParameter('imagesAlbumsDestination').$album->getImage());
-                }
-                $nomImg=md5(uniqid()).".".$ficherImg->guessExtension();
-                $ficherImg->move(
-                    $this->getParameter('imagesAlbumsDestination'),
-                    $nomImg
-                );
-                $album->setImage($nomImg);
-            }
             // Correction : lier chaque morceau à l'album courant
             foreach ($album->getMorceaux() as $morceau) {
                 $morceau->setAlbum($album);
@@ -79,7 +67,8 @@ class AlbumController extends AbstractController
             return $this->redirectToRoute('admin_albums');
         }
         return $this->render('admin/formAjoutModifAlbum.html.twig',[
-            'formAlbum' => $form->createView()
+            'formAlbum' => $form->createView(),
+            'albumimage'=>$album->getImage(),
         ]);
     }
 

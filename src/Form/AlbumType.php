@@ -75,28 +75,13 @@ class AlbumType extends AbstractType
                 'by_reference' => true,
                 'prototype' => true,
             ])
-            ->add('imageFile',FileType::class,[
-                'mapped'=>false,
-                'label'=>"Image de l'album",
-                'required'=>false,
-                'attr'=> [
-                    'accept'=>".jpg,.jpeg,.png",
+            ->add('image', TextType::class, [
+                'label' => "URL de l'image de l'album",
+                'attr' => [
+                    'placeholder' => "Saisir l'URL de l'image de l'album",
+                    'required' => true,
                 ],
-                'row_attr'=>[
-                    'class'=>'d-none'
-                ],
-                'constraints' => [
-                        new Image([
-                            'maxSize' => '4k',
-                            'maxSizeMessage' => 'Le fichier est trop volumineux',
-                            'mimeTypes' => [
-                                'image/jpeg',
-                                'image/png',
-                            ],
-                        ])
-                ]
-            ])
-            ->add('image', HiddenType::class);
+            ]);
 
             
         }
