@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ajout style{% endblock %}
+
+{% block body %}
+<h1 class="pt-2" text-center> 
+{% if (app.request.attributes.get('_route')=="admin_styles_ajout")%}
+Ajout
+{% else %}
+Modification
+{% endif %}
+d'un Style</h1>
+
+{{form_start(formStyle,{'attr':{'novalidate':'novalidate'}})}}
+
+<div class="row">
+  <div class="col-9">{{ form_row(formStyle.nom) }}</div>
+  <div class="col-3">{{ form_row(formStyle.couleur) }}</div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col"><input type="submit" ,value="valider" class="btn btn-success btn-block"></div>
+  <div class="col"><a href="{{path('admin_styles')}}" class="btn btn-danger btn-block">Annuler</a></div>
+</div>
+
+{{form_end(formStyle)}}
+
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{
+  "emmet.includeLanguages": {
+    "twig": "html"
+  },
+  "intelephense.environment.phpVersion": "8.2.0"
+}

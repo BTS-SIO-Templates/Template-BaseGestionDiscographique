@@ -1,0 +1,32 @@
+{
+  "name": "Symfony 8.2 Environment",
+  // "build": {
+  //   "dockerfile": "Dockerfile"
+  // },
+  "image": "ghcr.io/btssiojvpromo2025-2026/symfony-env:8.2",
+  // 1. Indiquez le fichier Docker Compose à utiliser
+  //"dockerComposeFile": [
+  //  "docker-compose.yml" 
+  //], 
+
+  // 2. Spécifiez que votre service principal Symfony est toujours 'app' 
+  // (ou le nom de votre service si vous utilisez déjà Docker Compose)
+  //"service": "app", 
+
+  // 4. Ajoutez MailHog comme dépendance de votre conteneur principal (optionnel mais propre)
+  //"initializeCommand": "docker-compose -f .devcontainer/docker-compose.yml up -d mailhog",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",   // Intellisense PHP
+        "xdebug.php-debug",                      // Debug PHP
+        "junstyle.php-cs-fixer",                 // PHP CS Fixer (code style)
+        "usernamehw.errorlens",                  // Affiche les erreurs dans l’éditeur
+        "mblode.twig-language-2",                // Support Twig
+        "phproberto.vscode-php-getters-setters", // Génération getters/setters
+        "symfony.symfony-vscode"                 // Outils Symfony
+      ]
+    }
+  },
+  "forwardPorts": [8000] // 8025 pour l'interface web de MailHog
+}

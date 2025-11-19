@@ -1,0 +1,21 @@
+# .devcontainer/docker-compose.yml
+
+version: '3.8'
+services:
+  # Votre conteneur principal (Symfony)
+  app:
+    image: ghcr.io/btssiojvpromo2025-2026/symfony-env:8.2
+    # Ajoutez ici le volume de votre code si nécessaire
+    volumes:
+     - ..:/var/www/html # Adaptez ce chemin à votre besoin
+    ports:
+      - "8000:8000"
+
+  # Le service MailHog
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'
+    ports:
+      - "1025:1025"
+      - "8025:8025"
