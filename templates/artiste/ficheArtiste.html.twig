@@ -26,8 +26,9 @@
           <li class="list-group-item">
             {% if leArtiste.type is not null and leArtiste.type == 0 %}
               Artiste Solo
-            {% else leArtiste.type is not null and leArtiste.type == 1 %}
+            {% elseif leArtiste.type is not null and leArtiste.type == 1 %}
               Groupe
+            {% endif %}
           </li>
                     <li class="list-group-item"><a href="{{leArtiste.site}}"> Voir Site Web</a></li>
                 </ul>
