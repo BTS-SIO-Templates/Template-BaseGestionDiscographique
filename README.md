@@ -6,7 +6,7 @@
 la base de données est hébergée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
 
 - modifier le fichier `.env` à la racine du projet en y modifiant cette ligne :
-`DATABASE_URL="mysql://votrenom:votremdp@btssio.dedyn.io:3306/votrenom_GestionMusiqueLabel?serverVersion=5.7.33&charset=utf8mb4` 
+`DATABASE_URL="mysql://votrenom:votremdp@btssio.dedyn.io:3306/votrenom_GestionMusiqueLabel?serverVersion=5.7.33&charset=utf8mb4"` 
 en remplacant "votrenom" par votre identifiant sur le serveur Mysql du lycée et "votremdp" par votre mot de passe sur ce serveur.
 
 - tapez en ligne de commande `composer install` pour télécharger les dépendances
