@@ -7,14 +7,50 @@ use App\Entity\Style;
 use App\Entity\Artiste;
 use App\Entity\Album;
 use App\Entity\Morceau;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $userPassword;
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $this->userPassword = $userPasswordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
-        $faker=Factory::create("fr_FR"); 
+        // gestion des users
+        $faker = Factory::create('fr_FR');
+        $genres=["male","female"];
+        for ($i = 0; $i < 20; $i++) {
+            $sexe=mt_rand(0,1);
+            if ($sexe == 0){ $type = "men";}
+            else {$type = "women";}
+       
+        $user = new User();
+        $user->setNom($faker->lastName())
+             ->setPrenom($faker->firstName($genres[$sexe]))
+             ->setEmail($faker->email())
+             ->setSexe($sexe)
+             ->setIsVerified(true)
+            ->setPassword( $this->userPassword->hashPassword($user,"test1234"))
+             ->setAvatar("https://randomuser.me/api/portraits/".$type."/".$i.".jpg");
+                $manager->persist($user);    
+        }
+        $admin = new User();
+        $admin->setNom("Admin")
+             ->setPrenom("Personne")
+             ->setEmail("admin@gmail.com")
+             ->setSexe($sexe)
+             ->setRoles(["ROLE_ADMIN"])
+             ->setIsVerified(true)
+             ->setPassword( $this->userPassword->hashPassword($admin,"admin1234"))
+             ->setAvatar("https://randomuser.me/api/portraits/".$type."/".$i.".jpg");
+                $manager->persist($admin);    
+
+        // gestion des styles
         $LesStyles = $this->chargeFichier("style.csv");
         
         foreach ($LesStyles as $value)
@@ -27,6 +63,7 @@ class AppFixtures extends Fixture
                 $this->addReference("style".$style->getId(),$style);
             }
 
+        // gestion des artistes
         $lesArtistes=$this->chargeFichier("artiste.csv");
 
 
@@ -44,7 +81,8 @@ class AppFixtures extends Fixture
                 $manager->persist($artiste);
                 $this->addReference("artiste".$artiste->getId(),$artiste);
             }
-            
+        
+        // gestin des albums
             $lesAlbums=$this->chargeFichier("album.csv");
             foreach($lesAlbums as $value)
                 {
@@ -59,7 +97,7 @@ class AppFixtures extends Fixture
                     $this->addReference("album".$album->getId(),$album);
                 }
 
-            
+        // gestion des morceaux
             $lesMorceaux=$this->chargeFichier("morceau.csv");
             foreach($lesMorceaux as $value)
                 {
@@ -72,8 +110,6 @@ class AppFixtures extends Fixture
                     $manager->persist($morceau);
                     $this->addReference("morcea".$morceau->getId(),$morceau);
                 }
-
-
 
         $manager->flush();
     }
