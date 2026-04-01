@@ -30,6 +30,9 @@
         // --- UI ---
         "PKief.material-icon-theme"
       ],
+      "codespaces": {
+            "openFiles": ["README.md"]
+        },
       "settings": {
         "php.suggest.basic": false,
         "editor.formatOnSave": true,
@@ -64,5 +67,5 @@
   "forwardPorts": [8000, 8025, 9003],
   "remoteUser": "root", 
 
-  "postCreateCommand": "composer install"
+  "postCreateCommand": "chmod +x bin/setup-db.sh"
 }
