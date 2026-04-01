@@ -12,6 +12,7 @@ echo -e "${BLUE}=== Initialisation de l'environnement Symfony ===${NC}"
 if grep -q "mysql://root:root" .env || ! grep -q "DATABASE_URL" .env; then
     read -p "Entrez votre nom d'utilisateur pour le SGBD : " DB_USER
     read -s -p "Entrez votre mot de passe pour le SGBD : " DB_PASS
+    echo ""
     read -p "Entrez le nom de votre base de données (par défaut: TPsymfony) : " DB_BD
     DB_BD=${DB_BD:-TPsymfony}
     
