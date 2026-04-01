@@ -11,7 +11,8 @@ echo -e "${BLUE}=== Initialisation de l'environnement Symfony ===${NC}"
 # 1. Récupération des identifiants si la base n'est pas encore créée
 if grep -q "mysql://root:root" .env || ! grep -q "DATABASE_URL" .env; then
     read -p "Entrez votre nom d'utilisateur SGBD : " DB_USER
-    read -p "Entrez le nom de votre base de données : " DB_BD
+    read -p "Entrez le nom de votre base de données (par défaut: TPsymfony) : " DB_BD
+    DB_BD=${DB_BD:-TPsymfony}
     read -s -p "Entrez votre mot de passe SGBD : " DB_PASS
     echo -e "\n"
     # Construction du nom de la base de données
