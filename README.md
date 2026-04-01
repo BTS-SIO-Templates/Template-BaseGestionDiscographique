@@ -2,6 +2,12 @@
 
 ## 🚀 Étapes pour démarrer
 
+Bienvenue ! Pour configurer votre base de données et installer les dépendances, 
+copiez-collez la commande suivante dans votre terminal :
+
+```bash
+./bin/setup-db.sh
+
 ### 1. Configurer la base de données
 la base de données est hébergée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
 
