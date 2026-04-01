@@ -6,6 +6,7 @@
     "vscode": {
       "extensions": [
         // --- Cœur PHP & Symfony ---
+        "yzhang.markdown-all-in-one",
         "bmewburn.vscode-intelephense-client",
         "symfony.symfony-vscode",
         "xdebug.php-debug",
