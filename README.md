@@ -7,6 +7,7 @@ copiez-collez la commande suivante dans votre terminal :
 
 ```bash
 ./bin/setup-db.sh
+```
 
 ### 1. Assistant de démarrage
 la base de données sera créée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
