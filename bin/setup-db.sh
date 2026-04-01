@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Couleurs pour le feedback terminal
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}=== Initialisation de l'environnement Symfony ===${NC}"
+
+# 1. Récupération des identifiants
+read -p "Entrez votre nom d'utilisateur SGBD : " DB_USER
+read -p "Entrez le nom de votre base de données : " DB_BD
+read -s -p "Entrez votre mot de passe SGBD : " DB_PASS
+echo -e "\n"
+
+# Construction du nom de la base de données
+DB_NAME="${DB_USER}_${DB_BD}"
+
+# 2. Mise à jour dynamique du .env
+# Nous utilisons '|' comme séparateur pour éviter les conflits avec les '/' de l'URL
+if [ -f .env ]; then
+    sed -i "s|DATABASE_URL=.*|DATABASE_URL=\"mysql://$DB_USER:$DB_PASS@127.0.0.1:3306/$DB_NAME?serverVersion=8.0.32\"|" .env
+    echo -e "${GREEN}[OK]${NC} Fichier .env configuré pour la base : $DB_NAME"
+else
+    echo -e "Erreur : Fichier .env introuvable."
+    exit 1
+fi
+
+# 3. Exécution des commandes Symfony
+echo -e "${BLUE}Installation des dépendances (composer)...${NC}"
+composer install
+
+echo -e "${BLUE}Création de la base de données...${NC}"
+php bin/console doctrine:database:create --if-not-exists
+
+echo -e "${BLUE}Mise à jour du schéma...${NC}"
+# Utilisation de --force pour un TP (plus direct que les migrations)
+php bin/console doctrine:schema:update --force --complete
+
+echo -e "${BLUE}Chargement des fixtures...${NC}"
+# --no-interaction évite la question de confirmation
+php bin/console doctrine:fixtures:load --no-interaction
+
+echo -e "${GREEN}=== Configuration terminée avec succès ! ===${NC}"
