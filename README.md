@@ -8,20 +8,23 @@ copiez-collez la commande suivante dans votre terminal :
 ```bash
 ./bin/setup-db.sh
 
-### 1. Configurer la base de données
-la base de données est hébergée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
+### 1. Assistant de démarrage
+la base de données sera créée sur le serveur du BTS à l'adresse btssio.dedyn.io.  
 
-- modifier le fichier `.env` à la racine du projet en y modifiant cette ligne :
-`DATABASE_URL="mysql://votrenom:votremdp@btssio.dedyn.io:3306/votrenom_GestionMusiqueLabel?serverVersion=5.7.33&charset=utf8mb4"` 
-en remplacant "votrenom" par votre identifiant sur le serveur Mysql du lycée et "votremdp" par votre mot de passe sur ce serveur.
+il vous sera demandé :
 
-- tapez en ligne de commande `composer install` pour télécharger les dépendances
+- votre nom d'utilisateur pour vous connecter au SGBDR MySql
 
-- Créez la base de données sur votre serveur Mysql en tapant en ligne de commande `php bin/console doctrine:database:create` (la base de données créée aura pour nom **votrenom_GestionMusiqueLabel**)
+- votre mot de passe pour vous connecter au SGBDR MySql
 
-- Créer la structures de la base (les tables et leurs relations) en tapant en ligne de commande : `php bin/console doctrine:schema:update --force` (vérifiez le résultat)
+- le nom que vous voulez donner à votre base de données (sachant qu'il le prefixera automatique de votre nom d'utilisateur suivi d'un "_")
 
-- Lancez les fixtures afin d'alimenter la base en tapant en ligne de commande : `php bin/console doctrine:fixtures:load`
+### 2. Que fait l'assistant de démarrage ?
+
+- il lance le chargement des dépendance avec `composer install`
+- il lance la création de la base de données avec `php bin/console doctrine:database:create` (sauf si elle existe déjà)
+- il lance la création des tables de la base de données avec `php bin/console doctrine:schema:update --force --complete`
+- il lance les fixtures si elles ne sont pas déja crées ou si vous le demandez avec `php bin/console doctrine:fixtures:load --no-interaction`
 
 ### 2. compte admin
 l'admin peut se connecter avec son identifiant `admin@gmail.com` et son mot de passe `admin1234` afin d'avoir accès aux fonctionnalités d'administration (CRUD)
