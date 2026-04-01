@@ -21,7 +21,7 @@ if grep -q "mysql://root:root" .env || ! grep -q "DATABASE_URL" .env; then
     # 2. Mise à jour dynamique du .env
     # Nous utilisons '|' comme séparateur pour éviter les conflits avec les '/' de l'URL
     if [ -f .env ]; then
-        sed -i "s|DATABASE_URL=.*|DATABASE_URL=\"mysql://$DB_USER:$DB_PASS@127.0.0.1:3306/$DB_NAME?serverVersion=8.0.32\"|" .env
+        sed -i "s|DATABASE_URL=.*|DATABASE_URL=\"mysql://$DB_USER:$DB_PASS@btssio.dedyn.io:3306/$DB_NAME?serverVersion=8.0.32\"|" .env
         echo -e "${GREEN}[OK]${NC} Fichier .env configuré pour la base : $DB_NAME"
     else
         echo -e "Erreur : Fichier .env introuvable."
