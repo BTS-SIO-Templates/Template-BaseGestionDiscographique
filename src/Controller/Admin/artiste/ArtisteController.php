@@ -4,13 +4,15 @@ namespace App\Controller\Admin\artiste;
 
 use App\Entity\Artiste;
 use App\Form\ArtisteType;
+use App\Form\FiltreArtisteType;
+use App\Models\FiltreArtiste;
 use App\Repository\ArtisteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArtisteController extends AbstractController
 {
@@ -18,13 +20,17 @@ class ArtisteController extends AbstractController
 
     public function listeArtistes(ArtisteRepository $repo , PaginatorInterface $paginator , Request $request): Response
     {
+        $filtre = new FiltreArtiste();
+        $formFiltreArtiste=$this->createForm(FiltreArtisteType::class,$filtre);
+        $formFiltreArtiste->handleRequest($request);
         $artistes=$paginator->paginate(
-            $repo->listeArtisteCompletePaginee(),
+            $repo->listeArtisteCompletePaginee($filtre),
             $request->query->getInt('page', 1), /* page number */
             9 /* limit per page */
         );
         return $this->render('admin/listeArtistes.html.twig',[
-            'lesArtistes' => $artistes
+            'lesArtistes' => $artistes,
+            'formFiltreArtiste' => $formFiltreArtiste->createView()
         ]);
 
     }

@@ -3,10 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Artiste;
-use Doctrine\ORM\Query;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Models\FiltreArtiste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Artiste>
@@ -45,14 +46,19 @@ class ArtisteRepository extends ServiceEntityRepository
 //    /**
 //     * @return Query Returns an array of Artiste objects
 //     */
-       public function listeArtisteCompletePaginee(): Query
+       public function listeArtisteCompletePaginee(FiltreArtiste $filtre): Query
     {
-        return $this->createQueryBuilder('art')
+        $rechercheNom = $filtre->getNom();
+        $query = $this->createQueryBuilder('art')
             ->select('art','a')
             ->leftJoin('art.albums','a')
-            ->orderBy('art.nom', 'ASC')
-            ->getQuery()
-        ;
+            ->orderBy('art.nom', 'ASC');
+            if(!empty($filtre->getNom())){
+                $query->andWhere('art.nom LIKE :nom')
+                      ->setParameter('nom', "%{$rechercheNom}%");
+                    
+                    }
+        return $query->getQuery();
     }
 
          public function listeArtisteSimple(): QueryBuilder
