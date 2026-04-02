@@ -11,6 +11,7 @@
         "symfony.symfony-vscode",
         "xdebug.php-debug",
         "usernamehw.errorlens",
+        "mehedidracula.php-namespace-resolver",
         
         // --- Templating & Frontend (Twig / JS) ---
         "mblode.twig-language-2",
